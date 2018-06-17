@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
 
-**Note: You can visit the firebase live demo at https://oshop-88677.firebaseapp.com/
+**Note: You can visit the firebase live demo at https://oshop-88677.firebaseapp.com/**
 
 ## Development server
 
