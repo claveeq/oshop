@@ -1,3 +1,4 @@
+import { CategoryService } from './category.service';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { UserService } from './user.service';
 import { AuthGuard } from './auth-guard.service';
@@ -21,6 +22,10 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
+import { ProductService } from './product.service';
 
 @NgModule({
   declarations: [
@@ -34,26 +39,32 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
+    FormsModule,
+    CustomFormsModule,
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
+      // Anonymous
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
-
-      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard]},
-      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard]},
-      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard]},
-
-      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard]},
-      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard]},
+      // User
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+      // Admin
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products/:id', component: ProductFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
     ])
   ],
   providers: [
@@ -61,6 +72,8 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
     AdminAuthGuard,
     AuthService,
     UserService,
+    CategoryService,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

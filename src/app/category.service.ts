@@ -1,0 +1,15 @@
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CategoryService {
+
+  constructor(private db: AngularFireDatabase) { }
+
+  getCategories() {
+    return this.db.list('/categories', ref => ref.orderByChild('name')).snapshotChanges();
+  }
+}
